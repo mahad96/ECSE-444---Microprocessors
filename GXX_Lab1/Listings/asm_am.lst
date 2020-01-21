@@ -1,0 +1,72 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             test, CODE, READONLY
+    2 00000000         
+    3 00000000                 export           asm_am
+    4 00000000         asm_am
+    5 00000000         
+    6 00000000         loop
+    7 00000000 1E5B            SUBS             R3, R3, #1
+    8 00000002 DB08            BLT              done
+    9 00000004 ECB0 0A01       VLDR.f32         S0, [R0], #4
+   10 00000008 ECF1 0A01       VLDR.f32         S1, [R1], #4
+   11 0000000C EE20 1A20       VMUL.f32         S2, S0, S1
+   12 00000010 ECA2 1A01       VSTR.f32         S2, [R2], #4
+   13 00000014 E7F4            B                loop
+   14 00000016         
+   15 00000016         done
+   16 00000016         
+   17 00000016 4770            BX               LR
+   18 00000018         
+   19 00000018                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\asm_am.d -o.\objects\asm_am.o -I.\RTE\_GXX_Lab1 -IC:\
+Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\ARM\C
+MSIS\5.5.1\CMSIS\DSP\Include -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\Device\ARM\A
+RMCM4\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 5
+26" --predefine="_RTE_ SETA 1" --predefine="ARMCM4_FP SETA 1" --list=.\listings
+\asm_am.lst asm_am.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+asm_am 00000000
+
+Symbol: asm_am
+   Definitions
+      At line 4 in file asm_am.s
+   Uses
+      At line 3 in file asm_am.s
+Comment: asm_am used once
+done 00000016
+
+Symbol: done
+   Definitions
+      At line 15 in file asm_am.s
+   Uses
+      At line 8 in file asm_am.s
+Comment: done used once
+loop 00000000
+
+Symbol: loop
+   Definitions
+      At line 6 in file asm_am.s
+   Uses
+      At line 13 in file asm_am.s
+Comment: loop used once
+test 00000000
+
+Symbol: test
+   Definitions
+      At line 1 in file asm_am.s
+   Uses
+      None
+Comment: test unused
+4 symbols
+339 symbols in table

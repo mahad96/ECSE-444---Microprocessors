@@ -1,0 +1,136 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             test, CODE, READONLY
+    2 00000000         
+    3 00000000                 export           asm_sd
+    4 00000000         asm_sd
+    5 00000000         
+    6 00000000 F04F 0400       MOV              R4, #0
+    7 00000004 EE00 4A10       VMOV.f32         S0, R4
+    8 00000008 EE00 4A90       VMOV.f32         S1, R4
+    9 0000000C EE01 4A10       VMOV.f32         S2, R4
+   10 00000010 EE01 4A90       VMOV.f32         S3, R4
+   11 00000014 EE02 4A10       VMOV.f32         S4, R4
+   12 00000018         
+   13 00000018         
+   14 00000018 B50F            PUSH{R0-R3,      LR}
+   15 0000001A F000 F80E       BL               mean
+   16 0000001E E8BD 400F       POP{R0-R3,       LR}
+   17 00000022 460C            MOV              R4, R1
+   18 00000024         
+   19 00000024         var_loop
+   20 00000024 1E64            SUBS             R4, R4, #1
+   21 00000026 DB18            BLT              done
+   22 00000028 ECB0 1A01       VLDR.f32         S2, [R0], #4
+   23 0000002C EE71 1A40       VSUB.f32         S3, S2, S0
+   24 00000030 EE61 1AA1       VMUL.f32         S3, S3, S3
+   25 00000034 EE31 2A82       VADD.f32         S4, S3, S4
+   26 00000038 E7F4            B                var_loop
+   27 0000003A         
+   28 0000003A         mean
+   29 0000003A 460C            MOV              R4, R1
+   30 0000003C         mean_loop
+   31 0000003C 1E64            SUBS             R4, R4, #1
+   32 0000003E DB04            BLT              mean_done
+   33 00000040 ECB0 0A01       VLDR.f32         S0, [R0], #4
+   34 00000044 EE70 0A20       VADD.f32         S1, S0, S1
+   35 00000048 E7F8            B                mean_loop
+   36 0000004A         
+   37 0000004A         mean_done
+   38 0000004A 460C            MOV              R4, R1
+   39 0000004C EE02 4A90       VMOV.f32         S5, R4
+   40 00000050 EEF8 2AE2       VCVT.f32.s32     S5, S5
+   41 00000054 EE80 0AA2       VDIV.f32         S0, S1, S5
+   42 00000058 4770            BX               LR
+   43 0000005A         
+   44 0000005A         done
+   45 0000005A F1A1 0101       SUB              R1, R1, #1
+   46 0000005E EE02 1A90       VMOV.f32         S5, R1
+   47 00000062 EEF8 2AE2       VCVT.f32.s32     S5, S5
+   48 00000066 EE82 2A22       VDIV.f32         S4, S4, S5
+   49 0000006A EEB1 2AC2       VSQRT.f32        S4, S4
+   50 0000006E ED82 2A00       VSTR.f32         S4, [R2]
+   51 00000072 4770            BX               LR
+   52 00000074         
+   53 00000074                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\asm_sd.d -o.\objects\asm_sd.o -I.\RTE\_GXX_Lab1 -IC:\
+Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\ARM\C
+MSIS\5.5.1\CMSIS\DSP\Include -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\Device\ARM\A
+RMCM4\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 5
+26" --predefine="_RTE_ SETA 1" --predefine="ARMCM4_FP SETA 1" --list=.\listings
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+\asm_sd.lst asm_sd.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+asm_sd 00000000
+
+Symbol: asm_sd
+   Definitions
+      At line 4 in file asm_sd.s
+   Uses
+      At line 3 in file asm_sd.s
+Comment: asm_sd used once
+done 0000005A
+
+Symbol: done
+   Definitions
+      At line 44 in file asm_sd.s
+   Uses
+      At line 21 in file asm_sd.s
+Comment: done used once
+mean 0000003A
+
+Symbol: mean
+   Definitions
+      At line 28 in file asm_sd.s
+   Uses
+      At line 15 in file asm_sd.s
+Comment: mean used once
+mean_done 0000004A
+
+Symbol: mean_done
+   Definitions
+      At line 37 in file asm_sd.s
+   Uses
+      At line 32 in file asm_sd.s
+Comment: mean_done used once
+mean_loop 0000003C
+
+Symbol: mean_loop
+   Definitions
+      At line 30 in file asm_sd.s
+   Uses
+      At line 35 in file asm_sd.s
+Comment: mean_loop used once
+test 00000000
+
+Symbol: test
+   Definitions
+      At line 1 in file asm_sd.s
+   Uses
+      None
+Comment: test unused
+var_loop 00000024
+
+Symbol: var_loop
+   Definitions
+      At line 19 in file asm_sd.s
+   Uses
+      At line 26 in file asm_sd.s
+Comment: var_loop used once
+7 symbols
+342 symbols in table
